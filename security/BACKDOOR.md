@@ -136,15 +136,44 @@ usan `TeleportService:Teleport(<JuegoID>, player)` hacia otros lugares de Roblox
 **conviene verificar** que esos destinos sean lugares propios de la institución y
 no redirecciones a juegos de terceros.
 
-## Remediación (pendiente, sobre `main`)
+## Remediación — ESTADO: COMPLETADA
 
-1. Eliminar cada **script raíz** listado arriba **junto con todos sus módulos
-   hijos** (`Type`, `Layout`, `EasyConfiguration`, `OptimizationConfig`,
-   `PoseTexture`, y cualquier `IntValue`/`NumberValue`/`NumberPose` que guarde un ID).
-2. No editar los scripts para "desactivar" el `require`: eliminarlos completos.
-   El código de luces/welding que los rodea es señuelo, no funcionalidad real.
-3. Re-ejecutar el barrido hasta que no devuelva coincidencias.
-4. Reconstruir el `.rbxl` limpio con Rojo y verificar en un servidor de prueba.
+La limpieza se hizo en **dos frentes independientes**, porque el malware vivía en
+`Workspace`/`Lighting` (ramas que Rojo no sincroniza):
 
-El estado original queda preservado en el tag `original`; el diff
-`git diff original main` documentará la limpieza en texto.
+1. **En el volcado `src/` (versionado):** se eliminaron los scripts con `git rm`
+   (commit `f33c6d4`). Barrido IoC posterior: 0 coincidencias.
+2. **En los binarios `.rbxl` (el juego real):** se corrió `tools/disinfect-studio.luau`
+   en el Command Bar de Studio, que detecta y elimina por firma, y se guardó cada
+   lugar. Resultados de la simulación → eliminación:
+
+   | Mapa | Coincidencias | Raíces eliminadas | Confirmación |
+   |---|---|---|---|
+   | laberinto | 4 | 3 | 0 ✓ |
+   | mapa | 25 | 20 | 0 ✓ |
+   | parkour | 16 | 9 | 0 ✓ |
+
+   (Las coincidencias incluyen módulos hijos que caen junto a su raíz; en `mapa`
+   había **12 copias** de `qPerfectionWeld`, una por modelo soldado con ese plugin.)
+
+3. **Re-exportación:** con los `.rbxl` ya limpios se regeneró `src/`
+   (commit `8527242`). Barrido IoC final sobre `src/`: **0 rastros**.
+
+### Verificación
+
+```bash
+# Debe devolver 0 coincidencias en todo maps/
+rg -n "require\([^)]*\.Value\)|IsStudio\(\) then\s*return|NumberPose|getArchetype|TypeLibrary\.getSignal" maps/
+```
+
+Además, se hizo Play-test de cada mapa: arrancan sin errores de `require`. En `mapa`
+se verificó que los modelos que usaban `qPerfectionWeld` siguen enteros (estaban
+anclados, no dependían de la soldadura en runtime).
+
+### Trazabilidad
+
+- Punto original intacto: tag `original`.
+- Análisis del malware junto al código: rama `original-analisis`.
+- Limpieza en texto: `git diff original main`.
+- Nota: eliminar los scripts era la vía correcta; **no** se "desactivó" el `require`.
+  El código de luces/soldadura que los rodeaba era señuelo, no funcionalidad real.
