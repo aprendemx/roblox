@@ -1,7 +1,7 @@
 local CollectionService = game:GetService("CollectionService")
 
 local CONVEYOR_TAG = "Conveyor"
-local DEFAULT_CONVEYOR_SPEED = 25 
+local DEFAULT_CONVEYOR_SPEED = 10
 
 local function setupConveyor(conveyor: Instance)
 	if not conveyor:IsA("BasePart") then

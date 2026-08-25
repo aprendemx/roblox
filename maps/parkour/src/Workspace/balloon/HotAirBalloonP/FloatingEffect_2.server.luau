@@ -11,10 +11,10 @@ end
 -- ║      CONFIGURACIÓN                   ║
 -- ╚══════════════════════════════════════╝
 
-local AMPLITUDE = 10.6       -- Qué tan alto/bajo flota (studs)
-local SPEED = 1.5          -- Velocidad del ciclo de flotado
+local AMPLITUDE = 15.6       -- Qué tan alto/bajo flota (studs)
+local SPEED = 2.2           -- Velocidad del ciclo de flotado
 local CURVE_POWER = 1.4     -- Curva: >1 = más tiempo en los picos, <1 = más lineal
-local TILT_AMOUNT = 0.6      -- Inclinación sutil al flotar (grados), 0 para desactivar
+local TILT_AMOUNT = 0.7    -- Inclinación sutil al flotar (grados), 0 para desactivar
 
 -- ════════════════════════════════════════
 
