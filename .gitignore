@@ -1,0 +1,10 @@
+# Cache del registro de skills (generado, no es del proyecto)
+.atl/
+
+# Builds temporales de Rojo
+*.rbxlx
+!places/*.rbxlx
+
+# Sistema
+.DS_Store
+Thumbs.db
