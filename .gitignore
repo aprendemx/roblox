@@ -5,6 +5,9 @@
 *.rbxlx
 !places/*.rbxlx
 
+# Locks de Studio (temporales mientras un .rbxl está abierto)
+*.rbxl.lock
+
 # Sistema
 .DS_Store
 Thumbs.db
