@@ -99,6 +99,10 @@ El objetivo, las mecánicas, los teleportes y los eventos de cada mapa están en
 [`docs/gameplay.md`](docs/gameplay.md): `mapa` (hub social), `laberinto` (puzzle de
 recolección) y `parkour` (parkour de recolección con leaderboard global).
 
+Para continuar el desarrollo, la [`docs/guia-desarrollo.md`](docs/guia-desarrollo.md)
+explica el enfoque con que se construyeron los mapas, sus patrones y eventos comunes, y
+qué se hizo bien y qué conviene mejorar.
+
 ## Seguridad
 
 Los tres mapas venían con backdoors de *free models* (inyección de `require`). Ver:
