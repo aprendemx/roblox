@@ -93,6 +93,12 @@ scripts hermanos con el mismo nombre (sufijo `_N`).
 > el próximo `export` pisa esos cambios. Definir la dirección de sincronización
 > (Studio→src o src→Studio) es una decisión pendiente del proyecto.
 
+## Gameplay
+
+El objetivo, las mecánicas, los teleportes y los eventos de cada mapa están en
+[`docs/gameplay.md`](docs/gameplay.md): `mapa` (hub social), `laberinto` (puzzle de
+recolección) y `parkour` (parkour de recolección con leaderboard global).
+
 ## Seguridad
 
 Los tres mapas venían con backdoors de *free models* (inyección de `require`). Ver:
